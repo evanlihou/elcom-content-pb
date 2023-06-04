@@ -16,10 +16,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build --target bin --output bin/ .
+      run: docker build --cache-from type=gha --cache-to type=gha,mode=max --target bin --output bin/ .
     - name: Upload executable
       uses: actions/upload-artifact@v3.1.2
       with:
         name: cms
         path: bin/cms
+        if-no-files-found: error
     

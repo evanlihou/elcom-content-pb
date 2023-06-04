@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker buildx --cache-from type=gha --cache-to type=gha,mode=max --target bin --output bin/ .
+      run: docker buildx build --cache-from type=gha --cache-to type=gha,mode=max --target bin --output bin/ .
     - name: Upload executable
       uses: actions/upload-artifact@v3.1.2
       with:

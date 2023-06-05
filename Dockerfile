@@ -8,6 +8,6 @@ COPY go.sum .
 RUN go mod download
 
 COPY . .
-RUN go build -ldflags="-extldflags=-static" -o /out/cms .
+RUN go build -o /out/cms .
 FROM scratch AS bin
 COPY --from=build /out/cms /

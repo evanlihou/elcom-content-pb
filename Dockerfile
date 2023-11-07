@@ -8,6 +8,10 @@ COPY go.sum .
 RUN go mod download
 
 COPY . .
-RUN go build -o /out/cms .
-FROM scratch AS bin
-COPY --from=build /out/cms /
+RUN go build -ldflags="-extldflags=-static" -o /out/cms .
+
+FROM alpine AS runtime
+WORKDIR /app
+EXPOSE 8090
+COPY --from=build /out/cms ./cms
+ENTRYPOINT ["./cms", "serve", "--http=0.0.0.0:8090"]
